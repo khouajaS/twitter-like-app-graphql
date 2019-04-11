@@ -2,7 +2,7 @@ import { ApolloServer, gql } from 'apollo-server';
 import mongoose from 'mongoose';
 import dotEnv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { get } from 'lodash';
+import { get, merge } from 'lodash';
 import bcrypt from 'bcrypt';
 import User from './models/user';
 import Tweet from './models/tweet';
@@ -12,7 +12,8 @@ dotEnv.config();
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost/twitter';
 const SECRET_FOR_TOKEN = process.env.SECRET_FOR_TOKEN || '';
 
-const typeDefs = gql`
+
+const typeDefss = gql`
   type ListUser {
     count: Int!
     list: [User]!
@@ -81,23 +82,23 @@ const typeDefs = gql`
   }
 
   type Session {
-    id: ID
-    token: String
-    username: String
-    email: String
+    id: ID!
+    token: String!
+    username: String!
+    email: String!
   }
 
   input NewUserInput {
-    username: String
-    firstName: String
-    lastName: String
-    email: String
-    password: String
+    username: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
   }
 
   input LoginInput {
-    identifiant: String
-    password: String
+    identifiant: String!
+    password: String!
   }
 
   interface MutationResponse {
@@ -244,7 +245,7 @@ const generateToken = (id, email, secret, exp = defaultExpirationToken) => new P
 );
 
 
-const resolvers = {
+const resolverss = {
   Mutation: {
     register: async (_, { input: { password, ...otherFields } }, { models }) => {
       try {
