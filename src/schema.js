@@ -1,21 +1,27 @@
+import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 
-import loginMutation from './features/auth/login.mutation';
-import registerMutation from './features/auth/register.mutaion';
+import loginMutation from './mutations/auth/login.mutation';
+import registerMutation from './mutations/auth/register.mutation';
 
-import updateAvatarMutation from './features/profile/updateAvatar.mutation';
+import updateAvatarMutation from './mutations/profile/updateAvatar.mutation';
 
-import blockMutation from './features/relationship/block.mutation';
-import unblockMutation from './features/relationship/unblock.mutation';
-import followMutation from './features/relationship/follow.mutation';
-import unfollowMutation from './features/relationship/unfollow.mutation';
+import blockMutation from './mutations/relationship/block.mutation';
+import unblockMutation from './mutations/relationship/unblock.mutation';
+import followMutation from './mutations/relationship/follow.mutation';
+import unfollowMutation from './mutations/relationship/unfollow.mutation';
 
-import likeTweetMutation from './features/timeline/likeTweet.mutation';
-import unLikeTweetMutation from './features/timeline/unLikeTweet.mutation';
-import newTweetMutation from './features/timeline/newTweet.mutation';
-import removeTweetMutation from './features/timeline/removeTweet.mutation';
-import replyToTweetMutation from './features/timeline/replyToTweet.mutation';
-import retweetMutation from './features/timeline/retweet.mutation';
+import likeTweetMutation from './mutations/timeline/likeTweet.mutation';
+import unLikeTweetMutation from './mutations/timeline/unLikeTweet.mutation';
+import newTweetMutation from './mutations/timeline/newTweet.mutation';
+import removeTweetMutation from './mutations/timeline/removeTweet.mutation';
+import replyToTweetMutation from './mutations/timeline/replyToTweet.mutation';
+import retweetMutation from './mutations/timeline/retweet.mutation';
+
+import meQuery from './queries/me.query';
+import timelineQuery from './queries/timeLine.query';
+import threadQuery from './queries/thread.query';
+import tweetQuery from './queries/tweet.query';
 
 
 const timeline = {
@@ -70,30 +76,61 @@ const relationship = {
   ),
 };
 
+const queries = {
+  typeDefs: [
+    ...meQuery.typeDefs,
+    ...timelineQuery.typeDefs,
+    ...threadQuery.typeDefs,
+    ...tweetQuery.typeDefs,
+  ],
+  resolvers: merge(
+    meQuery.resolvers,
+    timelineQuery.resolvers,
+    threadQuery.resolvers,
+    tweetQuery.resolvers,
+  ),
+};
+
 const baseTypeDefs = gql`
-  interface Node {
-    id: ID!
+  interface MutationResponse {
+    error: String
+    ok: Boolean
   }
+
   type Query {
-    node(id: ID): Node
+    empty: String
+  }
+
+  type Mutation {
+    empty2: String
   }
 `;
 
 const baseResolver = {
   Query: {
-    node: (_, args, ctx) => categoriesServices.node(args, ctx),
+    empty: () => 'hello',
+  },
+  Mutation: {
+    empty2: () => 'hello',
   },
 };
 
 const typeDefs = [
   baseTypeDefs,
-  ...catalog.typeDefs,
-  ...orders.typeDefs,
+  ...timeline.typeDefs,
+  ...auth.typeDefs,
+  ...profile.typeDefs,
+  ...relationship.typeDefs,
+  ...queries.typeDefs,
 ];
 const resolvers = merge(
   baseResolver,
-  catalog.resolvers,
-  orders.resolvers,
+  timeline.resolvers,
+  auth.resolvers,
+  profile.resolvers,
+  relationship.resolvers,
+  queries.resolvers,
 );
 
-export default { typeDefs, resolvers };
+export { typeDefs };
+export { resolvers };

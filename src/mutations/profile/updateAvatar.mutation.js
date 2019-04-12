@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server';
 
 const AvatarUpdatedResponse = gql`
-   type AvatarUpdatedResponse implements MutationResponse {
+  type AvatarUpdatedResponse implements MutationResponse {
     error: String
     ok: Boolean
   }

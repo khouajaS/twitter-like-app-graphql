@@ -17,9 +17,13 @@ const resolvers = {
   Mutation: {
     follow: async (_, { userId }, { models, user }) => {
       try {
+        // TODO: transaction
         const { nModified } = await models.User
           .update({ _id: user.id }, { $addToSet: { following: userId } });
-        if (nModified === 0) {
+        const { nModified: nModified2 } = await models.User
+          .update({ _id: userId }, { $addToSet: { followers: user.id } });
+
+        if (nModified === 0 || nModified2 === 0) {
           return {
             ok: false,
             error: 'you are followed him before',

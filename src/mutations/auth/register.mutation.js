@@ -22,11 +22,11 @@ const resolvers = {
   Mutation: {
     register: async (_, { input: { password, ...otherFields } }, { models }) => {
       try {
-        const hashedPassword = await hashPassword(password, 10);
+        const hashedPassword = await models.User.hashPassword(password);
         const user = new models.User({ ...otherFields, password: hashedPassword });
         await user.save();
         const { _id: id, email, username } = user;
-        const token = await generateToken(id, email, SECRET_FOR_TOKEN);
+        const token = await user.generateToken();
         return {
           ok: true,
           session: {

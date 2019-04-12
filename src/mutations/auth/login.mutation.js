@@ -27,7 +27,7 @@ const resolvers = {
             error: 'bad credentials',
           };
         }
-        const correctPassword = await bcrypt.compare(password, currentUser.password);
+        const correctPassword = await currentUser.verifyPassword(password);
         if (!correctPassword) {
           return {
             ok: false,
@@ -35,7 +35,7 @@ const resolvers = {
           };
         }
         const { _id: id, email, username } = currentUser;
-        const token = await generateToken(id, email, SECRET_FOR_TOKEN);
+        const token = await currentUser.generateToken();
         return {
           ok: true,
           session: {

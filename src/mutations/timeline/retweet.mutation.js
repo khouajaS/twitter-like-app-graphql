@@ -24,7 +24,7 @@ const resolvers = {
             error: 'tweet does not exist',
           };
         }
-
+        // TODO: add retweet to original tweet
         const retweet = new models.Tweet({ isRetweet: true, parentId: tweetId, owner: user.id });
         await retweet.save();
         return { ok: true };

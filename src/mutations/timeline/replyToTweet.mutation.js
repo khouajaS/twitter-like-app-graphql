@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server';
 import { merge } from 'lodash';
-import Tweet from '';
-import TweetInput from ''
+import User from '../../types/user.type'; // cyclic dependency
+import TweetInput from './tweet.input';
 
 const ReplyToTweetAcknowledgement = gql`
   type ReplyToTweetAcknowledgement implements MutationResponse {
@@ -43,12 +43,12 @@ export default {
   typeDefs: [
     ReplyToTweetAcknowledgement,
     replyToTweetMutation,
-    ...Tweet.typeDefs,
+    ...User.typeDefs,
     ...TweetInput.typeDefs,
   ],
   resolvers: merge(
     resolvers,
-    Tweet.resolvers,
+    User.resolvers,
     TweetInput.resolvers,
   ),
 };

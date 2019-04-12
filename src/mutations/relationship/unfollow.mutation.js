@@ -17,9 +17,12 @@ const resolvers = {
   Mutation: {
     unfollow: async (_, { userId }, { models, user }) => {
       try {
+        // TODO: transaction
         const { nModified } = await models.User
           .update({ _id: user.id }, { $pull: { following: userId } });
-        if (nModified === 0) {
+        const { nModified: nModified2 } = await models.User
+          .update({ _id: userId }, { $pull: { followers: user.id } });
+        if (nModified === 0 || nModified2 === 0) {
           return {
             ok: false,
             error: 'you are already unfollow him',
