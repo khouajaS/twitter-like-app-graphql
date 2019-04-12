@@ -8,7 +8,6 @@ const meQuery = gql`
   }
 `;
 
-
 const resolvers = {
   Query: {
     me: (_, $, { models, user }) => models.User.findOne({ _id: user.id }),

@@ -8,13 +8,11 @@ const TimeLine = gql`
   }
 `;
 
-
 const timeLineQuery = gql`
   extend type Query {
     timeLine: TimeLine
   }
 `;
-
 
 const resolvers = {
   Query: {

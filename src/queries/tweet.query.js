@@ -8,7 +8,6 @@ const tweetQuery = gql`
   }
 `;
 
-
 const resolvers = {
   Query: {
     tweet: (_, { id }, { models }) => models.Tweet.findOne({ _id: id }),

@@ -1,4 +1,9 @@
 import { gql } from 'apollo-server';
+import {
+  buildSuccessMuationResponse,
+  buildFailedMutationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const TweetLikedAcknowledgement = gql`
   type TweetLikedAcknowledgement implements MutationResponse {
@@ -15,21 +20,14 @@ const likeTweetMutation = gql`
 
 const resolvers = {
   Mutation: {
-    likeTweet: async (_, { tweetId }, { models, user }) => {
-      try {
-        const { nModified } = await models.Tweet
-          .update({ _id: tweetId }, { $addToSet: { likes: user.id } });
-        if (nModified === 0) {
-          return {
-            ok: false,
-            error: 'tweet does not exist or liked before',
-          };
-        }
-        return { ok: true };
-      } catch (error) {
-        return { ok: false, error: error.toString() };
+    likeTweet: tryCatchAsyncMutation(async (_, { tweetId }, { models, user }) => {
+      const { nModified } = await models.Tweet
+        .update({ _id: tweetId }, { $addToSet: { likes: user.id } });
+      if (nModified === 0) {
+        return buildFailedMutationResponse('tweet does not exist or liked before');
       }
-    },
+      return buildSuccessMuationResponse();
+    }),
   },
 };
 

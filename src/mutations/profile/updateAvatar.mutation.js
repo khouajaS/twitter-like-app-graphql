@@ -1,4 +1,9 @@
 import { gql } from 'apollo-server';
+import {
+  buildSuccessMuationResponse,
+  buildFailedMutationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const AvatarUpdatedResponse = gql`
   type AvatarUpdatedResponse implements MutationResponse {
@@ -23,21 +28,14 @@ const updateAvatarMutation = gql`
 
 const resolvers = {
   Mutation: {
-    updateAvatar: async (_, { input }, { models, user }) => {
-      try {
-        const { nModified } = await models
-          .User.update({ _id: user.id }, { $set: { avatar: input } });
-        if (nModified === 0) {
-          return {
-            ok: false,
-            error: 'user does not exist',
-          };
-        }
-        return { ok: true };
-      } catch (error) {
-        return { ok: false, error: error.toString() };
+    updateAvatar: tryCatchAsyncMutation(async (_, { input }, { models, user }) => {
+      const { nModified } = await models
+        .User.update({ _id: user.id }, { $set: { avatar: input } });
+      if (nModified === 0) {
+        return buildFailedMutationResponse('user does not exist');
       }
-    },
+      return buildSuccessMuationResponse();
+    }),
   },
 };
 

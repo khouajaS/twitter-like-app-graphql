@@ -8,7 +8,6 @@ const threadQuery = gql`
   }
 `;
 
-
 const resolvers = {
   Query: {
     thread: (_, { id }, { models }) => models.Tweet.findOne({ _id: id }),

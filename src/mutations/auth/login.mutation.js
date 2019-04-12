@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 import NewSessionResponse from './NewSessionResponse.type';
+import {
+  buildSuccessMuationResponse,
+  buildFailedMutationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const LoginInput = gql`
   input LoginInput {
@@ -17,41 +22,29 @@ const loginMutation = gql`
 
 const resolvers = {
   Mutation: {
-    login: async (_, { input: { identifiant, password } }, { models }) => {
-      try {
-        const currentUser = await models.User
-          .findOne({ $or: [{ email: identifiant }, { username: identifiant }] });
-        if (!currentUser) {
-          return {
-            ok: false,
-            error: 'bad credentials',
-          };
-        }
-        const correctPassword = await currentUser.verifyPassword(password);
-        if (!correctPassword) {
-          return {
-            ok: false,
-            error: 'bad credentials',
-          };
-        }
-        const { _id: id, email, username } = currentUser;
-        const token = await currentUser.generateToken();
-        return {
-          ok: true,
-          session: {
-            id,
-            token,
-            username,
-            email,
-          },
-        };
-      } catch (error) {
-        return {
-          ok: false,
-          error: error.toString(),
-        };
+    login: tryCatchAsyncMutation(async (_, { input: { identifiant, password } }, { models }) => {
+      const currentUser = await models.User
+        .findOne({ $or: [{ email: identifiant }, { username: identifiant }] });
+      if (!currentUser) {
+        return buildFailedMutationResponse('bad credentials');
       }
-    },
+
+      const correctPassword = await currentUser.verifyPassword(password);
+      if (!correctPassword) {
+        return buildFailedMutationResponse('bad credentials');
+      }
+
+      const { _id: id, email, username } = currentUser;
+      const token = await currentUser.generateToken();
+
+      const session = {
+        id,
+        token,
+        username,
+        email,
+      };
+      return buildSuccessMuationResponse({ session });
+    }),
   },
 };
 

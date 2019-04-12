@@ -2,6 +2,10 @@ import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 import User from '../../types/user.type'; // cyclic dependency
 import TweetInput from './tweet.input';
+import {
+  buildSuccessMuationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const TweetAddedAcknowledgement = gql`
   type TweetAddedAcknowledgement implements MutationResponse {
@@ -19,15 +23,11 @@ const newTweetMutation = gql`
 
 const resolvers = {
   Mutation: {
-    newTweet: async (_, { input: { content, tags } }, { models, user }) => {
-      try {
-        const tweet = new models.Tweet({ content, tags, owner: user.id });
-        await tweet.save();
-        return { ok: true, tweet };
-      } catch (error) {
-        return { ok: false, error: error.toString() };
-      }
-    },
+    newTweet: tryCatchAsyncMutation(async (_, { input: { content, tags } }, { models, user }) => {
+      const tweet = new models.Tweet({ content, tags, owner: user.id });
+      await tweet.save();
+      return buildSuccessMuationResponse({ tweet });
+    }),
   },
 };
 

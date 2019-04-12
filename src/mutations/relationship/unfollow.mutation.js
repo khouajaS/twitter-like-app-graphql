@@ -1,4 +1,9 @@
 import { gql } from 'apollo-server';
+import {
+  buildSuccessMuationResponse,
+  buildFailedMutationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const UnFollowAcknowledgement = gql`
   type UnFollowAcknowledgement implements MutationResponse {
@@ -15,24 +20,17 @@ const unfollowMutation = gql`
 
 const resolvers = {
   Mutation: {
-    unfollow: async (_, { userId }, { models, user }) => {
-      try {
-        // TODO: transaction
-        const { nModified } = await models.User
-          .update({ _id: user.id }, { $pull: { following: userId } });
-        const { nModified: nModified2 } = await models.User
-          .update({ _id: userId }, { $pull: { followers: user.id } });
-        if (nModified === 0 || nModified2 === 0) {
-          return {
-            ok: false,
-            error: 'you are already unfollow him',
-          };
-        }
-        return { ok: true };
-      } catch (error) {
-        return { ok: false, error: error.toString() };
+    unfollow: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
+      // TODO: transaction
+      const { nModified } = await models.User
+        .update({ _id: user.id }, { $pull: { following: userId } });
+      const { nModified: nModified2 } = await models.User
+        .update({ _id: userId }, { $pull: { followers: user.id } });
+      if (nModified === 0 || nModified2 === 0) {
+        return buildFailedMutationResponse('you are already unfollow him');
       }
-    },
+      return buildSuccessMuationResponse();
+    }),
   },
 };
 

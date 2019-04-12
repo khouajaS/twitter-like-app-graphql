@@ -2,7 +2,8 @@ import { Schema, model } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-const SECRET_FOR_TOKEN = process.env.SECRET_FOR_TOKEN || '';
+const getEnv = env => process.env[env] || '';
+
 const SALT_ROUNDS = 10;
 const defaultExpirationToken = Math.floor(Date.now() / 1000) + (60 * 60);
 
@@ -23,10 +24,11 @@ const UserSchema = new Schema({
 }, { timestamps: true });
 
 UserSchema.methods.generateToken = function generateToken(exp = defaultExpirationToken) {
+  const secret = getEnv('SECRET_FOR_TOKEN');
   const { _id: id, email } = this;
   return new Promise(
     (resolve, reject) => {
-      jwt.sign({ exp, email, id }, SECRET_FOR_TOKEN, (error, token) => {
+      jwt.sign({ exp, email, id }, secret, (error, token) => {
         if (error) {
           reject(error);
         } else {

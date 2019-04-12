@@ -60,7 +60,6 @@ const resolvers = {
   },
 };
 
-
 export default {
   typeDefs: [
     Retweets,

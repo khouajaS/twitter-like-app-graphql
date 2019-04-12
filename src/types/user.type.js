@@ -39,7 +39,6 @@ const ListUser = gql`
   }
 `;
 
-
 const resolvers = {
   User: {
     fullName: ({ firstName, lastName }) => `${firstName} ${lastName}`,
@@ -58,7 +57,6 @@ const resolvers = {
     },
   },
 };
-
 
 export default {
   typeDefs: [

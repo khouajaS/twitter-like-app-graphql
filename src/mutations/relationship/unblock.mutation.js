@@ -1,4 +1,9 @@
 import { gql } from 'apollo-server';
+import {
+  buildSuccessMuationResponse,
+  buildFailedMutationResponse,
+  tryCatchAsyncMutation,
+} from '../utils';
 
 const UnBlockAcknowledgement = gql`
   type UnBlockAcknowledgement implements MutationResponse {
@@ -15,21 +20,14 @@ const unblockMutation = gql`
 
 const resolvers = {
   Mutation: {
-    unblock: async (_, { userId }, { models, user }) => {
-      try {
-        const { nModified } = await models.User
-          .update({ _id: user.id }, { $pull: { bloqued: userId } });
-        if (nModified === 0) {
-          return {
-            ok: false,
-            error: 'you are already blocked him',
-          };
-        }
-        return { ok: true };
-      } catch (error) {
-        return { ok: false, error: error.toString() };
+    unblock: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
+      const { nModified } = await models.User
+        .update({ _id: user.id }, { $pull: { bloqued: userId } });
+      if (nModified === 0) {
+        return buildFailedMutationResponse('you are already blocked him');
       }
-    },
+      return buildSuccessMuationResponse();
+    }),
   },
 };
 
