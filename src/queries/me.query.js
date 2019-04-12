@@ -4,7 +4,7 @@ import User from '../types/user.type';
 
 const meQuery = gql`
   extend type Query {
-    me: User
+    me: User @private
   }
 `;
 

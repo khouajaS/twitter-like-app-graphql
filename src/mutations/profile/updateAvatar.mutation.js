@@ -22,7 +22,7 @@ const AvatarInput = gql`
 
 const updateAvatarMutation = gql`
   extend type Mutation {
-    updateAvatar(input: AvatarInput!): AvatarUpdatedResponse!
+    updateAvatar(input: AvatarInput!): AvatarUpdatedResponse! @private
   }
 `;
 

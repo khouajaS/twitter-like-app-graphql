@@ -14,7 +14,7 @@ const removeTweetAcknowledgement = gql`
 
 const removeTweetMutation = gql`
   extend type Mutation {
-    removeTweet(tweetId: ID!): removeTweetAcknowledgement!
+    removeTweet(tweetId: ID!): removeTweetAcknowledgement! @private
   }
 `;
 

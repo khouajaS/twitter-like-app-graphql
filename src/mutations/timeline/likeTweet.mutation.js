@@ -14,7 +14,7 @@ const TweetLikedAcknowledgement = gql`
 
 const likeTweetMutation = gql`
   extend type Mutation {
-    likeTweet(tweetId: ID!): TweetLikedAcknowledgement!
+    likeTweet(tweetId: ID!): TweetLikedAcknowledgement! @private
   }
 `;
 

@@ -14,7 +14,7 @@ const FollowAcknowledgement = gql`
 
 const followMutation = gql`
   extend type Mutation {
-    follow(userId: ID!): FollowAcknowledgement!
+    follow(userId: ID!): FollowAcknowledgement! @private
   }
 `;
 

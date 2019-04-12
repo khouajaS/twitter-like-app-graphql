@@ -17,7 +17,7 @@ const ReplyToTweetAcknowledgement = gql`
 
 const replyToTweetMutation = gql`
   extend type Mutation {
-    replyToTweet(tweetId: ID!, tweet: TweetInput!): ReplyToTweetAcknowledgement!
+    replyToTweet(tweetId: ID!, tweet: TweetInput!): ReplyToTweetAcknowledgement! @private
   }
 `;
 

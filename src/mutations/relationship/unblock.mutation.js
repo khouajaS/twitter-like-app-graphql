@@ -14,7 +14,7 @@ const UnBlockAcknowledgement = gql`
 
 const unblockMutation = gql`
   extend type Mutation {
-    unblock(userId: ID!): UnBlockAcknowledgement!
+    unblock(userId: ID!): UnBlockAcknowledgement! @private
   }
 `;
 

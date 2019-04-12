@@ -17,7 +17,7 @@ const TweetAddedAcknowledgement = gql`
 
 const newTweetMutation = gql`
   extend type Mutation {
-    newTweet(input: TweetInput!): TweetAddedAcknowledgement!
+    newTweet(input: TweetInput!): TweetAddedAcknowledgement! @private
   }
 `;
 

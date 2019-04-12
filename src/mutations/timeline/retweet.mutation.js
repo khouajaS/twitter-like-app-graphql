@@ -14,7 +14,7 @@ const RetweetAcknowledgement = gql`
 
 const retweetMutation = gql`
   extend type Mutation {
-    retweet(tweetId: ID!): RetweetAcknowledgement!
+    retweet(tweetId: ID!): RetweetAcknowledgement! @private
   }
 `;
 

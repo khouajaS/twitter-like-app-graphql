@@ -14,7 +14,7 @@ const UnFollowAcknowledgement = gql`
 
 const unfollowMutation = gql`
   extend type Mutation {
-    unfollow(userId: ID!): UnFollowAcknowledgement!
+    unfollow(userId: ID!): UnFollowAcknowledgement! @private
   }
 `;
 
