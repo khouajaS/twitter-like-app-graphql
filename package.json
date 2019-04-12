@@ -5,15 +5,19 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js --w src",
-    "start": "babel-node src/index.js"
+    "start": "babel-node src/index.js",
+    "test": "NODE_ENV=test env-cmd --no-override .env jest --runInBand --verbose"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
+    "docker-cli-js": "^2.5.2",
+    "env-cmd": "^8.0.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.4.1",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11"
   },

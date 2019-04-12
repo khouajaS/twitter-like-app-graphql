@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import { get } from 'lodash';
 import User from './models/user';
 import Tweet from './models/tweet';
-import { typeDefs, resolvers } from './schema';
+import { typeDefs, resolvers, schemaDirectives } from './schema';
 
 dotEnv.config();
 
@@ -37,6 +37,7 @@ const decodeUser = async (req) => {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  schemaDirectives,
   context: async ({ req }) => {
     const user = await decodeUser(req);
     return {
