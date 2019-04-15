@@ -15,10 +15,10 @@ mongoose.connect(
 )
   .then(() => {
     createApolloServer().listen().then(({ url }) => {
-      console.log(`🚀  Server ready at ${url}`);
+      console.log(`🚀  Server ready at ${url}`); // eslint-disable-line no-console
     });
   })
   .catch((error) => {
-    console.error(error);
+    console.error(error); // eslint-disable-line no-console
     process.exit(1);
   });
