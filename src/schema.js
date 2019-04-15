@@ -152,7 +152,6 @@ class privateDirective extends SchemaDirectiveVisitor {
   }
 }
 
-
 const schemaDirectives = {
   private: privateDirective,
 };
