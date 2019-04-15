@@ -45,7 +45,7 @@ const resolvers = {
     tweets: (_, $, { models, user }) => models.Tweet.find({ owner: user.id }),
   },
   Picture: {
-    url: url => ({ url }),
+    url: url => url,
   },
   ListUser: {
     count: list => (list ? list.length || 0 : 0),
