@@ -25,9 +25,10 @@ const resolvers = {
       if (!currentTweet) {
         return buildFailedMutationResponse('tweet does not exist');
       }
-      // TODO: add retweet to original tweet
+      // TODO: transaction
       const retweet = new models.Tweet({ isRetweet: true, parentId: tweetId, owner: user.id });
       await retweet.save();
+      models.Tweet.update({ _id: tweetId }, { $addToSet: { retweets: retweet.id } });
       return buildSuccessMuationResponse();
     }),
   },

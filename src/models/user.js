@@ -56,4 +56,25 @@ UserSchema.statics.hashPassword = function hashPassword(password) {
   });
 };
 
+const verifyToken = (token, secret) => new Promise((resolve, reject) => {
+  jwt.verify(token, secret, (error, decoded) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(decoded);
+    }
+  });
+});
+
+UserSchema.statics.decodeUser = async function decodeUser(token) {
+  if (!token) return false;
+  const secret = getEnv('SECRET_FOR_TOKEN');
+  try {
+    const user = await verifyToken(token, secret);
+    return user;
+  } catch (error) {
+    return false;
+  }
+};
+
 export default model('User', UserSchema);

@@ -27,10 +27,10 @@ const resolvers = {
     register: tryCatchAsyncMutation(
       async (_, { input: { password, ...otherFields } }, { models }) => {
         const hashedPassword = await models.User.hashPassword(password);
-        const user = new models.User({ ...otherFields, password: hashedPassword });
-        await user.save();
-        const { _id: id, email, username } = user;
-        const token = await user.generateToken();
+        const newUser = new models.User({ ...otherFields, password: hashedPassword });
+        await newUser.save();
+        const { _id: id, email, username } = newUser;
+        const token = await newUser.generateToken();
         const session = {
           id,
           token,
@@ -39,6 +39,7 @@ const resolvers = {
         };
         return buildSuccessMuationResponse({ session });
       },
+      { anonymous: true },
     ),
   },
 };

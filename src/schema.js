@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { gql, SchemaDirectiveVisitor, AuthenticationError } from 'apollo-server';
 import { merge } from 'lodash';
 
@@ -94,6 +93,7 @@ const queries = {
 
 const baseTypeDefs = gql`
   directive @private on FIELD_DEFINITION
+
   interface MutationResponse {
     error: String
     ok: Boolean
@@ -136,12 +136,13 @@ const resolvers = merge(
 );
 
 class privateDirective extends SchemaDirectiveVisitor {
+  /* eslint-disable-next-line class-methods-use-this */
   visitFieldDefinition(field) {
     const { resolve } = field;
     // eslint-disable-next-line no-param-reassign
     field.resolve = async function newResolver(...args) {
       const [, , ctx] = args;
-      if (!ctx.userid) {
+      if (!ctx.user) {
         throw new AuthenticationError('You are not authorized to access this resource.');
       } else {
         const result = await resolve.apply(this, args);
