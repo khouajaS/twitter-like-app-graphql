@@ -26,18 +26,22 @@ const resolvers = {
         return buildFailedMutationResponse('tweet does not exist');
       }
       // TODO: transaction
-      const retweet = new models.Tweet({ isRetweet: true, parentId: tweetId, owner: user.id });
+      const retweet = new models.Tweet({
+        isRetweet: true,
+        parentId: tweetId,
+        owner: user.id,
+      });
       await retweet.save();
-      models.Tweet.update({ _id: tweetId }, { $addToSet: { retweets: retweet.id } });
+      models.Tweet.update(
+        { _id: tweetId },
+        { $addToSet: { retweets: retweet.id } },
+      );
       return buildSuccessMuationResponse();
     }),
   },
 };
 
 export default {
-  typeDefs: [
-    RetweetAcknowledgement,
-    retweetMutation,
-  ],
+  typeDefs: [RetweetAcknowledgement, retweetMutation],
   resolvers,
 };

@@ -1,4 +1,9 @@
-const delay = ms => new Promise((resolve) => { setTimeout(() => { resolve(); }, ms); });
+const delay = (ms) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
 
 const retry = async (ctx, func, args, retries = 5, delayms = 500) => {
   if (retries === 0) throw Error('Failed to run');

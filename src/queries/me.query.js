@@ -15,9 +15,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    meQuery,
-    ...User.typeDefs,
-  ],
+  typeDefs: [meQuery, ...User.typeDefs],
   resolvers: merge(resolvers, User.resolvers),
 };

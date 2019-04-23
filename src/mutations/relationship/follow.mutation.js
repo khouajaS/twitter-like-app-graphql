@@ -22,10 +22,14 @@ const resolvers = {
   Mutation: {
     follow: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
       // TODO: transaction
-      const { nModified } = await models.User
-        .update({ _id: user.id }, { $addToSet: { following: userId } });
-      const { nModified: nModified2 } = await models.User
-        .update({ _id: userId }, { $addToSet: { followers: user.id } });
+      const { nModified } = await models.User.update(
+        { _id: user.id },
+        { $addToSet: { following: userId } },
+      );
+      const { nModified: nModified2 } = await models.User.update(
+        { _id: userId },
+        { $addToSet: { followers: user.id } },
+      );
 
       if (nModified === 0 || nModified2 === 0) {
         return buildFailedMutationResponse('you are followed him before');
@@ -36,9 +40,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    FollowAcknowledgement,
-    followMutation,
-  ],
+  typeDefs: [FollowAcknowledgement, followMutation],
   resolvers,
 };

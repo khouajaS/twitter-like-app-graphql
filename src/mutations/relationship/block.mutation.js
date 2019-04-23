@@ -21,8 +21,10 @@ const blockMutation = gql`
 const resolvers = {
   Mutation: {
     block: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
-      const { nModified } = await models.User
-        .update({ _id: user.id }, { $addToSet: { bloqued: userId } });
+      const { nModified } = await models.User.update(
+        { _id: user.id },
+        { $addToSet: { bloqued: userId } },
+      );
       if (nModified === 0) {
         return buildFailedMutationResponse('you are blocked him before');
       }
@@ -32,9 +34,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    BlockAcknowledgement,
-    blockMutation,
-  ],
+  typeDefs: [BlockAcknowledgement, blockMutation],
   resolvers,
 };

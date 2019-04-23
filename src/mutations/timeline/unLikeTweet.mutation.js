@@ -26,7 +26,11 @@ const resolvers = {
         return buildFailedMutationResponse('tweet does not exist');
       }
 
-      const retweet = new models.Tweet({ isRetweet: true, parentId: tweetId, owner: user.id });
+      const retweet = new models.Tweet({
+        isRetweet: true,
+        parentId: tweetId,
+        owner: user.id,
+      });
       await retweet.save();
       return buildSuccessMuationResponse();
     }),
@@ -34,9 +38,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    TweetUnLikedAcknowledgement,
-    unLikeTweetMutation,
-  ],
+  typeDefs: [TweetUnLikedAcknowledgement, unLikeTweetMutation],
   resolvers,
 };

@@ -24,8 +24,9 @@ const resolvers = {
   Mutation: {
     login: tryCatchAsyncMutation(
       async (_, { input: { identifiant, password } }, { models }) => {
-        const currentUser = await models.User
-          .findOne({ $or: [{ email: identifiant }, { username: identifiant }] });
+        const currentUser = await models.User.findOne({
+          $or: [{ email: identifiant }, { username: identifiant }],
+        });
         if (!currentUser) {
           return buildFailedMutationResponse('bad credentials');
         }
@@ -36,15 +37,14 @@ const resolvers = {
         }
 
         const { _id: id, email, username } = currentUser;
-        const token = await currentUser.generateToken();
-
-        const session = {
-          id,
-          token,
-          username,
-          email,
-        };
-        return buildSuccessMuationResponse({ session });
+        return buildSuccessMuationResponse({
+          session: {
+            token: await currentUser.generateToken(),
+            id,
+            username,
+            email,
+          },
+        });
       },
       { anonymous: true },
     ),
@@ -52,10 +52,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    LoginInput,
-    loginMutation,
-    ...NewSessionResponse.typeDefs,
-  ],
+  typeDefs: [LoginInput, loginMutation, ...NewSessionResponse.typeDefs],
   resolvers: merge(resolvers, NewSessionResponse.resolvers),
 };

@@ -1,8 +1,5 @@
 const { Docker } = require('docker-cli-js');
-const {
-  getContainer,
-  stopAndRemoveContainer,
-} = require('./utils');
+const { getContainer, stopAndRemoveContainer } = require('./utils');
 
 module.exports = async function globalTeardown() {
   try {

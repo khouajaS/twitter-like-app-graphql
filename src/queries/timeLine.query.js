@@ -23,12 +23,7 @@ const resolvers = {
   },
 };
 
-
 export default {
-  typeDefs: [
-    TimeLine,
-    timeLineQuery,
-    ...User.typeDefs,
-  ],
+  typeDefs: [TimeLine, timeLineQuery, ...User.typeDefs],
   resolvers: merge(resolvers, User.resolvers),
 };

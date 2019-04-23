@@ -32,7 +32,6 @@ const LOGIN = gql`
   }
 `;
 
-
 describe('Auth Mutations', () => {
   beforeAll(helpers.beforeAll);
   afterAll(helpers.afterAll);
@@ -49,7 +48,9 @@ describe('Auth Mutations', () => {
 
       const { mutate } = createApolloClient();
 
-      const { data: { register } } = await mutate({
+      const {
+        data: { register },
+      } = await mutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -75,7 +76,9 @@ describe('Auth Mutations', () => {
 
       const { mutate } = createApolloClient();
 
-      const { data: { register } } = await mutate({
+      const {
+        data: { register },
+      } = await mutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -85,7 +88,9 @@ describe('Auth Mutations', () => {
       expect(register.ok).not.toBeTruthy();
       expect(register.session).toBeNull();
       expect(register.error).not.toBeNull();
-      expect(register.error).toEqual('MongoError: E11000 duplicate key error collection: twitter-test.users index: email_1 dup key: { : "sadok@email.com" }');
+      expect(register.error).toEqual(
+        'MongoError: E11000 duplicate key error collection: twitter-test.users index: email_1 dup key: { : "sadok@email.com" }',
+      );
     });
     test('should not add new user with the same username', async () => {
       const newUserInput = {
@@ -98,7 +103,9 @@ describe('Auth Mutations', () => {
 
       const { mutate } = createApolloClient();
 
-      const { data: { register } } = await mutate({
+      const {
+        data: { register },
+      } = await mutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -108,7 +115,9 @@ describe('Auth Mutations', () => {
       expect(register.ok).not.toBeTruthy();
       expect(register.session).toBeNull();
       expect(register.error).not.toBeNull();
-      expect(register.error).toEqual('MongoError: E11000 duplicate key error collection: twitter-test.users index: username_1 dup key: { : "sadok" }');
+      expect(register.error).toEqual(
+        'MongoError: E11000 duplicate key error collection: twitter-test.users index: username_1 dup key: { : "sadok" }',
+      );
     });
     test('should add an other user', async () => {
       const newUserInput = {
@@ -121,7 +130,9 @@ describe('Auth Mutations', () => {
 
       const { mutate } = createApolloClient();
 
-      const { data: { register } } = await mutate({
+      const {
+        data: { register },
+      } = await mutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -142,7 +153,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -163,7 +176,9 @@ describe('Auth Mutations', () => {
 
       const { mutate: loggedMutate } = createApolloClient(login.session.token);
 
-      const { data: { register } } = await loggedMutate({
+      const {
+        data: { register },
+      } = await loggedMutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -185,7 +200,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -204,7 +221,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -223,7 +242,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -243,7 +264,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -263,7 +286,9 @@ describe('Auth Mutations', () => {
       };
       const { mutate } = createApolloClient();
 
-      const { data: { login } } = await mutate({
+      const {
+        data: { login },
+      } = await mutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
@@ -276,17 +301,19 @@ describe('Auth Mutations', () => {
 
       const { mutate: loggedMutate } = createApolloClient(login.session.token);
 
-      const { data: { login: loginWithToken } } = await loggedMutate({
+      const {
+        data: { login: loginWithTokenExist },
+      } = await loggedMutate({
         mutation: LOGIN,
         variables: {
           input: credentials,
         },
       });
 
-      expect(loginWithToken.ok).not.toBeTruthy();
-      expect(loginWithToken.session).toBeNull();
-      expect(loginWithToken.error).not.toBeNull();
-      expect(loginWithToken.error).toEqual('Already connected');
+      expect(loginWithTokenExist.ok).not.toBeTruthy();
+      expect(loginWithTokenExist.session).toBeNull();
+      expect(loginWithTokenExist.error).not.toBeNull();
+      expect(loginWithTokenExist.error).toEqual('Already connected');
     });
   });
 });

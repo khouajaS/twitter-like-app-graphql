@@ -20,9 +20,6 @@ const NewSessionResponse = gql`
 const resolvers = {};
 
 export default {
-  typeDefs: [
-    Session,
-    NewSessionResponse,
-  ],
+  typeDefs: [Session, NewSessionResponse],
   resolvers,
 };

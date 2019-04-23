@@ -82,7 +82,9 @@ describe('Profile Mutation', () => {
 
       const { mutate } = createApolloClient();
 
-      const { data: { register } } = await mutate({
+      const {
+        data: { register },
+      } = await mutate({
         mutation: REGISTER,
         variables: {
           input: newUserInput,
@@ -103,7 +105,9 @@ describe('Profile Mutation', () => {
         small: 'url-small',
       };
 
-      const { data: { updateAvatar } } = await loggedMutate({
+      const {
+        data: { updateAvatar },
+      } = await loggedMutate({
         mutation: UPDATE_AVATAR,
         variables: { input: avatarInput },
       });
@@ -111,7 +115,9 @@ describe('Profile Mutation', () => {
       expect(updateAvatar.ok).toBeTruthy();
       expect(updateAvatar.error).toBeNull();
 
-      const { data: { me } } = await query({
+      const {
+        data: { me },
+      } = await query({
         query: ME_WITH_AVATAR,
       });
 
@@ -130,7 +136,9 @@ describe('Profile Mutation', () => {
         small: 'url-small-2',
       };
 
-      const { data: { updateAvatar } } = await mutate({
+      const {
+        data: { updateAvatar },
+      } = await mutate({
         mutation: UPDATE_AVATAR,
         variables: { input: avatarInput },
       });
@@ -138,7 +146,9 @@ describe('Profile Mutation', () => {
       expect(updateAvatar.ok).toBeTruthy();
       expect(updateAvatar.error).toBeNull();
 
-      const { data: { me } } = await query({
+      const {
+        data: { me },
+      } = await query({
         query: ME_WITH_AVATAR,
       });
 

@@ -1,10 +1,7 @@
 import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 import NewSessionResponse from './NewSessionResponse.type';
-import {
-  buildSuccessMuationResponse,
-  tryCatchAsyncMutation,
-} from '../utils';
+import { buildSuccessMuationResponse, tryCatchAsyncMutation } from '../utils';
 
 const NewUserInput = gql`
   input NewUserInput {
@@ -27,7 +24,10 @@ const resolvers = {
     register: tryCatchAsyncMutation(
       async (_, { input: { password, ...otherFields } }, { models }) => {
         const hashedPassword = await models.User.hashPassword(password);
-        const newUser = new models.User({ ...otherFields, password: hashedPassword });
+        const newUser = new models.User({
+          ...otherFields,
+          password: hashedPassword,
+        });
         await newUser.save();
         const { _id: id, email, username } = newUser;
         const token = await newUser.generateToken();
@@ -45,10 +45,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    NewUserInput,
-    registerMutation,
-    ...NewSessionResponse.typeDefs,
-  ],
+  typeDefs: [NewUserInput, registerMutation, ...NewSessionResponse.typeDefs],
   resolvers: merge(resolvers, NewSessionResponse.resolvers),
 };

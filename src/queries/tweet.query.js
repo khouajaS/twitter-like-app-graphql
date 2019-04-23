@@ -15,9 +15,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    tweetQuery,
-    ...User.typeDefs,
-  ],
+  typeDefs: [tweetQuery, ...User.typeDefs],
   resolvers: merge(resolvers, User.resolvers),
 };

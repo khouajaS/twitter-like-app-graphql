@@ -28,22 +28,19 @@ const updateAvatarMutation = gql`
 
 const resolvers = {
   Mutation: {
-    updateAvatar: tryCatchAsyncMutation(async (_, { input }, { models, user }) => {
-      const { nModified } = await models
-        .User.update({ _id: user.id }, { $set: { avatar: input } });
-      if (nModified === 0) {
-        return buildFailedMutationResponse('user does not exist');
-      }
-      return buildSuccessMuationResponse();
-    }),
+    updateAvatar: tryCatchAsyncMutation(
+      async (_, { input }, { models, user }) => {
+        const { error } = await models.User.updateAvatar(user.id, input);
+        if (error) {
+          return buildFailedMutationResponse(error);
+        }
+        return buildSuccessMuationResponse();
+      },
+    ),
   },
 };
 
 export default {
-  typeDefs: [
-    updateAvatarMutation,
-    AvatarInput,
-    AvatarUpdatedResponse,
-  ],
+  typeDefs: [updateAvatarMutation, AvatarInput, AvatarUpdatedResponse],
   resolvers,
 };

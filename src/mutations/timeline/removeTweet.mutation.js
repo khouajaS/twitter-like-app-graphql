@@ -20,20 +20,24 @@ const removeTweetMutation = gql`
 
 const resolvers = {
   Mutation: {
-    removeTweet: tryCatchAsyncMutation(async (_, { tweetId }, { models, user }) => {
-      const { nRemoved } = await models.Tweet.remove({ _id: tweetId, owner: user.id });
-      if (nRemoved === 0) {
-        return buildFailedMutationResponse('tweet does not exist or not yours!');
-      }
-      return buildSuccessMuationResponse();
-    }),
+    removeTweet: tryCatchAsyncMutation(
+      async (_, { tweetId }, { models, user }) => {
+        const { nRemoved } = await models.Tweet.remove({
+          _id: tweetId,
+          owner: user.id,
+        });
+        if (nRemoved === 0) {
+          return buildFailedMutationResponse(
+            'tweet does not exist or not yours!',
+          );
+        }
+        return buildSuccessMuationResponse();
+      },
+    ),
   },
 };
 
 export default {
-  typeDefs: [
-    removeTweetAcknowledgement,
-    removeTweetMutation,
-  ],
+  typeDefs: [removeTweetAcknowledgement, removeTweetMutation],
   resolvers,
 };

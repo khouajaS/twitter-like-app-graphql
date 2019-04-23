@@ -38,10 +38,11 @@ const resolvers = {
       }
       return [];
     },
-    replies: ({ _id: parentId }, _, { models }) => models.Tweet.find({ parentId }),
+    replies: ({ _id: parentId }, _, { models }) =>
+      models.Tweet.find({ parentId }),
   },
   Likes: {
-    count: parent => parent.length || 0,
+    count: (parent) => parent.length || 0,
     list: (likes, _, { models }) => {
       if (likes && likes.length && likes.length > 0) {
         return models.User.find({ _id: { $in: likes } });
@@ -50,7 +51,7 @@ const resolvers = {
     },
   },
   Retweets: {
-    count: parent => parent.length || 0,
+    count: (parent) => parent.length || 0,
     list: (retweets, _, { models }) => {
       if (retweets && retweets.length && retweets.length > 0) {
         return models.Tweet.find({ _id: { $in: retweets }, isRetweet: true });
@@ -61,11 +62,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    Retweets,
-    Likes,
-    Tweet,
-    ...Thread.typeDefs,
-  ],
+  typeDefs: [Retweets, Likes, Tweet, ...Thread.typeDefs],
   resolvers: merge(resolvers, Thread.resolvers),
 };

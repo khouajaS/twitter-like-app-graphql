@@ -4,7 +4,6 @@ import User from './models/user';
 import Tweet from './models/tweet';
 import { typeDefs, resolvers, schemaDirectives } from './schema';
 
-
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,

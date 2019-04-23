@@ -15,9 +15,6 @@ const resolvers = {
 };
 
 export default {
-  typeDefs: [
-    threadQuery,
-    ...User.typeDefs,
-  ],
+  typeDefs: [threadQuery, ...User.typeDefs],
   resolvers: merge(resolvers, User.resolvers),
 };
