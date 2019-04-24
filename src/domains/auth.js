@@ -6,7 +6,7 @@ const getEnv = (env) => process.env[env] || '';
 const SALT_ROUNDS = 10;
 const defaultExpirationToken = Math.floor(Date.now() / 1000) + 60 * 60;
 
-function generateToken(id, email, expire) {
+const generateToken = (id, email, expire) => {
   const exp = expire || defaultExpirationToken;
   const secret = getEnv('SECRET_FOR_TOKEN');
   return new Promise((resolve, reject) => {
@@ -18,14 +18,13 @@ function generateToken(id, email, expire) {
       }
     });
   });
-}
+};
 
-function verifyPassword(passwordInput, password) {
-  return bcrypt.compare(passwordInput, password);
-}
+const verifyPassword = (passwordInput, password) =>
+  bcrypt.compare(passwordInput, password);
 
-function hashPassword(password) {
-  return new Promise((resolve, reject) => {
+const hashPassword = (password) =>
+  new Promise((resolve, reject) => {
     bcrypt.hash(password, SALT_ROUNDS, (error, hash) => {
       if (error) {
         reject(error);
@@ -34,7 +33,6 @@ function hashPassword(password) {
       }
     });
   });
-}
 
 const verifyToken = (token, secret) =>
   new Promise((resolve, reject) => {
@@ -47,7 +45,7 @@ const verifyToken = (token, secret) =>
     });
   });
 
-async function decodeUser(token) {
+const decodeUser = async (token) => {
   if (!token) return false;
   const secret = getEnv('SECRET_FOR_TOKEN');
   try {
@@ -56,7 +54,7 @@ async function decodeUser(token) {
   } catch (error) {
     return false;
   }
-}
+};
 
 export default {
   decodeUser,
