@@ -28,6 +28,7 @@
     "apollo-server": "^2.4.8",
     "apollo-server-testing": "^2.4.8",
     "bcrypt": "^3.0.5",
+    "data.task": "^3.1.2",
     "dotenv": "^7.0.0",
     "graphql": "^14.2.1",
     "jsonwebtoken": "^8.5.1",
