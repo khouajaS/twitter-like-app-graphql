@@ -30,12 +30,13 @@ const getContainerIP = (name) => (docker) =>
 
 const runNothing = () => createTask(Promise.resolve());
 
-const log = (tag, { withoutValue = false } = {}) => (val) => {
-  if (withoutValue) {
-    console.log(tag);
-  } else {
-    console.log(tag, val);
-  }
+const log = (tag) => (val) => {
+  console.log(tag, val);
+  return val;
+};
+
+const tap = (message) => (val) => {
+  console.log(message);
   return val;
 };
 
@@ -46,3 +47,4 @@ exports.getContainerIP = getContainerIP;
 exports.createTask = createTask;
 exports.runNothing = runNothing;
 exports.log = log;
+exports.tap = tap;
