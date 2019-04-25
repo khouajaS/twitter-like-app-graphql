@@ -6,10 +6,13 @@ describe('Auth Mutations', () => {
     beforeAll(helpers.beforeAll);
     afterAll(helpers.afterAll);
 
+    const uniqEmail = 'email@email.com';
+    const uniqUsername = 'joe';
+
     test('should add new User', async () => {
       const { user, register } = await createUserMutation({
-        email: 'email@email.com',
-        username: 'joe',
+        email: uniqEmail,
+        username: uniqUsername,
       });
       expect(register.ok).toBeTruthy();
       expect(register.error).toBeNull();
@@ -21,7 +24,7 @@ describe('Auth Mutations', () => {
 
     test('should not add new user with the same email', async () => {
       const { register } = await createUserMutation({
-        email: 'email@email.com',
+        email: uniqEmail,
       });
 
       expect(register.ok).not.toBeTruthy();
@@ -33,7 +36,7 @@ describe('Auth Mutations', () => {
     });
 
     test('should not add new user with the same username', async () => {
-      const { register } = await createUserMutation({ username: 'joe' });
+      const { register } = await createUserMutation({ username: uniqUsername });
 
       expect(register.ok).not.toBeTruthy();
       expect(register.session).toBeNull();
@@ -55,7 +58,7 @@ describe('Auth Mutations', () => {
     });
 
     test('should not access to register mutation if user was already connected', async () => {
-      const { user, register: initial } = await createUserMutation();
+      const { register: initial } = await createUserMutation();
 
       const { register } = await createUserMutation({
         accessToken: initial.session.token,
@@ -111,6 +114,7 @@ describe('Auth Mutations', () => {
       expect(login.session.id).toBeDefined();
       expect(login.session.token).toBeDefined();
       expect(login.session.email).toEqual(user.email);
+      expect(login.session.username).toEqual(user.username);
     });
 
     test('should connect with username', async () => {
@@ -125,6 +129,7 @@ describe('Auth Mutations', () => {
       expect(login.session.id).toBeDefined();
       expect(login.session.token).toBeDefined();
       expect(login.session.username).toEqual(user.username);
+      expect(login.session.email).toEqual(user.email);
     });
 
     test('should not access to login mutation if user was already connected', async () => {
