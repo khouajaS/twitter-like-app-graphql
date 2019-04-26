@@ -38,8 +38,7 @@ const resolvers = {
       }
       return [];
     },
-    replies: ({ _id: parentId }, _, { models }) =>
-      models.Tweet.find({ parentId }),
+    replies: ({ _id: parentId }, _, { models }) => models.Tweet.find({ parentId }),
   },
   Likes: {
     count: (parent) => parent.length || 0,

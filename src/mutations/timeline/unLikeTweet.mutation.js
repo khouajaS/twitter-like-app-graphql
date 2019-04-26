@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -32,7 +32,7 @@ const resolvers = {
         owner: user.id,
       });
       await retweet.save();
-      return buildSuccessMuationResponse();
+      return buildSuccessMutationResponse();
     }),
   },
 };

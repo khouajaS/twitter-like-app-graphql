@@ -2,7 +2,7 @@ import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 import NewSessionResponse from './NewSessionResponse.type';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -37,7 +37,7 @@ const resolvers = {
         }
 
         const { _id: id, email, username } = currentUser;
-        return buildSuccessMuationResponse({
+        return buildSuccessMutationResponse({
           session: {
             token: await currentUser.generateToken(),
             id,

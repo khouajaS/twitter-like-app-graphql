@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server';
 import { merge } from 'lodash';
 import NewSessionResponse from './NewSessionResponse.type';
-import { buildSuccessMuationResponse, tryCatchAsyncMutation } from '../utils';
+import { buildSuccessMutationResponse, tryCatchAsyncMutation } from '../utils';
 
 const NewUserInput = gql`
   input NewUserInput {
@@ -37,7 +37,7 @@ const resolvers = {
           username,
           email,
         };
-        return buildSuccessMuationResponse({ session });
+        return buildSuccessMutationResponse({ session });
       },
       { anonymous: true },
     ),

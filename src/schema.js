@@ -1,8 +1,4 @@
-import {
-  gql,
-  SchemaDirectiveVisitor,
-  AuthenticationError,
-} from 'apollo-server';
+import { gql, SchemaDirectiveVisitor, AuthenticationError } from 'apollo-server';
 import { merge } from 'lodash';
 
 import loginMutation from './mutations/auth/login.mutation';
@@ -138,9 +134,7 @@ class privateDirective extends SchemaDirectiveVisitor {
     field.resolve = async function newResolver(...args) {
       const [, , ctx] = args;
       if (!ctx.user) {
-        throw new AuthenticationError(
-          'You are not authorized to access this resource.',
-        );
+        throw new AuthenticationError('You are not authorized to access this resource.');
       } else {
         const result = await resolve.apply(this, args);
         return result;

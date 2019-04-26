@@ -20,8 +20,7 @@ const generateToken = (id, email, expire) => {
   });
 };
 
-const verifyPassword = (passwordInput, password) =>
-  bcrypt.compare(passwordInput, password);
+const verifyPassword = (passwordInput, password) => bcrypt.compare(passwordInput, password);
 
 const hashPassword = (password) =>
   new Promise((resolve, reject) => {

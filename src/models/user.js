@@ -26,19 +26,14 @@ UserSchema.methods.generateToken = function statefulGenerateToken(expire) {
   return auth.generateToken(id, email, expire);
 };
 
-UserSchema.methods.verifyPassword = function statefulVerifyPassword(
-  passwordInput,
-) {
+UserSchema.methods.verifyPassword = function statefulVerifyPassword(passwordInput) {
   const { password } = this;
   return auth.verifyPassword(passwordInput, password);
 };
 
 UserSchema.statics.hashPassword = auth.hashPassword;
 UserSchema.statics.decodeUser = auth.decodeUser;
-UserSchema.statics.updateAvatar = function statefulUpdateAvatar(
-  userId,
-  avatar,
-) {
+UserSchema.statics.updateAvatar = function statefulUpdateAvatar(userId, avatar) {
   return profile.updateAvatar(this, userId, avatar);
 };
 

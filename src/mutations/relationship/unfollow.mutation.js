@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -33,7 +33,7 @@ const resolvers = {
       if (nModified === 0 || nModified2 === 0) {
         return buildFailedMutationResponse('you are already unfollow him');
       }
-      return buildSuccessMuationResponse();
+      return buildSuccessMutationResponse();
     }),
   },
 };

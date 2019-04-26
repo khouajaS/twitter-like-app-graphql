@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -32,11 +32,8 @@ const resolvers = {
         owner: user.id,
       });
       await retweet.save();
-      models.Tweet.update(
-        { _id: tweetId },
-        { $addToSet: { retweets: retweet.id } },
-      );
-      return buildSuccessMuationResponse();
+      models.Tweet.update({ _id: tweetId }, { $addToSet: { retweets: retweet.id } });
+      return buildSuccessMutationResponse();
     }),
   },
 };

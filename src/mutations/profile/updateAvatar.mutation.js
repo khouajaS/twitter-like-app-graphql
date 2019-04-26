@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -28,15 +28,13 @@ const updateAvatarMutation = gql`
 
 const resolvers = {
   Mutation: {
-    updateAvatar: tryCatchAsyncMutation(
-      async (_, { input }, { models, user }) => {
-        const { error } = await models.User.updateAvatar(user.id, input);
-        if (error) {
-          return buildFailedMutationResponse(error);
-        }
-        return buildSuccessMuationResponse();
-      },
-    ),
+    updateAvatar: tryCatchAsyncMutation(async (_, { input }, { models, user }) => {
+      const { error } = await models.User.updateAvatar(user.id, input);
+      if (error) {
+        return buildFailedMutationResponse(error);
+      }
+      return buildSuccessMutationResponse();
+    }),
   },
 };
 

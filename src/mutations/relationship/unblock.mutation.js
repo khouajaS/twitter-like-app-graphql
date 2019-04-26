@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 import {
-  buildSuccessMuationResponse,
+  buildSuccessMutationResponse,
   buildFailedMutationResponse,
   tryCatchAsyncMutation,
 } from '../utils';
@@ -28,7 +28,7 @@ const resolvers = {
       if (nModified === 0) {
         return buildFailedMutationResponse('you are already blocked him');
       }
-      return buildSuccessMuationResponse();
+      return buildSuccessMutationResponse();
     }),
   },
 };

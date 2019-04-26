@@ -1,4 +1,4 @@
-const buildSuccessMuationResponse = (extraFields = {}) => ({
+const buildSuccessMutationResponse = (extraFields = {}) => ({
   ok: true,
   error: null,
   ...extraFields,
@@ -6,12 +6,7 @@ const buildSuccessMuationResponse = (extraFields = {}) => ({
 
 const buildFailedMutationResponse = (error) => ({ ok: false, error });
 
-const tryCatchAsyncMutation = (mutation, { anonymous } = {}) => async (
-  root,
-  args,
-  ctx,
-  info,
-) => {
+const tryCatchAsyncMutation = (mutation, { anonymous } = {}) => async (root, args, ctx, info) => {
   if (anonymous && ctx.user) {
     return buildFailedMutationResponse('Already connected');
   }
@@ -23,8 +18,4 @@ const tryCatchAsyncMutation = (mutation, { anonymous } = {}) => async (
   }
 };
 
-export {
-  buildSuccessMuationResponse,
-  buildFailedMutationResponse,
-  tryCatchAsyncMutation,
-};
+export { buildSuccessMutationResponse, buildFailedMutationResponse, tryCatchAsyncMutation };

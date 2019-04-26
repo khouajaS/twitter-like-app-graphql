@@ -16,6 +16,7 @@
     "docker-cli-js": "^2.5.2",
     "env-cmd": "^8.0.2",
     "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^22.4.1",

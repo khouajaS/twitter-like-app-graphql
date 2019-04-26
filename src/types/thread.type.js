@@ -10,8 +10,7 @@ const Thread = gql`
 const resolvers = {
   Thread: {
     tweet: (parent) => parent,
-    replies: ({ _id: parentId }, _, { models }) =>
-      models.Tweet.find({ parentId }),
+    replies: ({ _id: parentId }, _, { models }) => models.Tweet.find({ parentId }),
   },
 };
 
