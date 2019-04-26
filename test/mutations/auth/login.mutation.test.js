@@ -1,8 +1,6 @@
 import triggers from '../../triggers';
 import { createUserMutation, loginMutation } from '../../helpers';
 
-const a = 22;
-
 describe('Login Mutations', () => {
   beforeAll(triggers.beforeAll);
   afterAll(triggers.afterAll);
