@@ -1,9 +1,6 @@
 import { gql } from 'apollo-server';
-import {
-  buildSuccessMutationResponse,
-  buildFailedMutationResponse,
-  tryCatchAsyncMutation,
-} from '../utils';
+import { Task } from 'fawn';
+import { buildSuccessMutationResponse, tryCatchAsyncMutation } from '../utils';
 
 const FollowAcknowledgement = gql`
   type FollowAcknowledgement implements MutationResponse {
@@ -21,19 +18,10 @@ const followMutation = gql`
 const resolvers = {
   Mutation: {
     follow: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
-      // TODO: transaction
-      const { nModified } = await models.User.updateOne(
-        { _id: user.id },
-        { $addToSet: { following: userId } },
-      );
-      const { nModified: nModified2 } = await models.User.updateOne(
-        { _id: userId },
-        { $addToSet: { followers: user.id } },
-      );
-
-      if (nModified === 0 || nModified2 === 0) {
-        return buildFailedMutationResponse('you are followed him before');
-      }
+      await Task()
+        .update(models.User, { _id: user.id }, { $addToSet: { following: userId } })
+        .update(models.User, { _id: userId }, { $addToSet: { followers: user.id } })
+        .run({ useMongoose: true });
       return buildSuccessMutationResponse();
     }),
   },

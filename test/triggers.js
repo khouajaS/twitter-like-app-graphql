@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Fawn from 'fawn';
 import Tweet from '../src/models/tweet';
 import User from '../src/models/user';
 import { retry } from './utils';
@@ -12,6 +13,8 @@ const beforeAll = async () => {
     mongoUrl,
     { useNewUrlParser: true, useCreateIndex: true },
   ]);
+
+  Fawn.init(mongoose);
 
   await Tweet.deleteMany();
   await User.deleteMany();

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import dotEnv from 'dotenv';
+import Fawn from 'fawn';
 import createApolloServer from './server';
 
 dotEnv.config();
@@ -12,6 +13,7 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
+    Fawn.init(mongoose);
     createApolloServer()
       .listen()
       .then(({ url }) => {

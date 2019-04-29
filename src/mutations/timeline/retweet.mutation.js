@@ -1,4 +1,5 @@
 import { gql } from 'apollo-server';
+import { Task } from 'fawn';
 import {
   buildSuccessMutationResponse,
   buildFailedMutationResponse,
@@ -25,14 +26,15 @@ const resolvers = {
       if (!currentTweet) {
         return buildFailedMutationResponse('tweet does not exist');
       }
-      // TODO: transaction
-      const retweet = new models.Tweet({
-        isRetweet: true,
-        parentId: tweetId,
-        owner: user.id,
-      });
-      await retweet.save();
-      models.Tweet.update({ _id: tweetId }, { $addToSet: { retweets: retweet.id } });
+      await Task()
+        .save(models.Tweet, {
+          isRetweet: true,
+          parentId: tweetId,
+          owner: user.id,
+        })
+        .update(models.Tweet, { _id: tweetId }, { $addToSet: { retweets: { $ojFuture: '0._id' } } })
+        .run();
+
       return buildSuccessMutationResponse();
     }),
   },
