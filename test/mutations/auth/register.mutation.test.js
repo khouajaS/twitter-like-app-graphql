@@ -29,9 +29,7 @@ describe('Register Mutations', () => {
     expect(register.ok).not.toBeTruthy();
     expect(register.session).toBeNull();
     expect(register.error).not.toBeNull();
-    // expect(register.error).toEqual(
-    //   'MongoError: E11000 duplicate key error collection: twitter-test.users index: email_1 dup key: { : "sadok@email.com" }',
-    // );
+    expect(register.error).toEqual(`duplication on users : email ->  "${uniqEmail}"`);
   });
 
   test('should not add new user with the same username', async () => {
@@ -40,9 +38,7 @@ describe('Register Mutations', () => {
     expect(register.ok).not.toBeTruthy();
     expect(register.session).toBeNull();
     expect(register.error).not.toBeNull();
-    // expect(register.error).toEqual(
-    //   'MongoError: E11000 duplicate key error collection: twitter-test.users index: username_1 dup key: { : "sadok" }',
-    // );
+    expect(register.error).toEqual(`duplication on users : username ->  "${uniqUsername}"`);
   });
 
   test('should add an other user', async () => {
