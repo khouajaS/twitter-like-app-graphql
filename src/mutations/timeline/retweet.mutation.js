@@ -33,7 +33,7 @@ const resolvers = {
           owner: user.id,
         })
         .update(models.Tweet, { _id: tweetId }, { $addToSet: { retweets: { $ojFuture: '0._id' } } })
-        .run();
+        .run({ useMongoose: true });
 
       return buildSuccessMutationResponse();
     }),
