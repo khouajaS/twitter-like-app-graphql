@@ -16,7 +16,7 @@ const UserSchema = new Schema(
     },
     following: [String],
     followers: [String],
-    bloqued: [String],
+    blocked: [String],
   },
   { timestamps: true },
 );

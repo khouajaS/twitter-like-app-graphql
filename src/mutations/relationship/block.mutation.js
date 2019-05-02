@@ -23,7 +23,7 @@ const resolvers = {
     block: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
       const { nModified } = await models.User.update(
         { _id: user.id },
-        { $addToSet: { bloqued: userId } },
+        { $addToSet: { blocked: userId } },
       );
       if (nModified === 0) {
         return buildFailedMutationResponse('you are blocked him before');

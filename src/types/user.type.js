@@ -35,7 +35,7 @@ const User = gql`
     tweets: [Tweet]
     following: ListUser!
     followers: ListUser!
-    bloqued: ListUser!
+    blocked: ListUser!
   }
 `;
 

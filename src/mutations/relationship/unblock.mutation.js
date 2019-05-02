@@ -23,7 +23,7 @@ const resolvers = {
     unblock: tryCatchAsyncMutation(async (_, { userId }, { models, user }) => {
       const { nModified } = await models.User.update(
         { _id: user.id },
-        { $pull: { bloqued: userId } },
+        { $pull: { blocked: userId } },
       );
       if (nModified === 0) {
         return buildFailedMutationResponse('you are already blocked him');
