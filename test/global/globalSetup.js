@@ -1,8 +1,9 @@
+const uuid = require('uuid/v4');
 const { Docker } = require('docker-cli-js');
-const { createDockerContainerForTest } = require('./tasks');
+const { createDockerContainerForTest } = require('../../libs/mongodb-runner/index');
 
 async function globalSetup() {
-  const mongoName = 'some-mongo';
+  const mongoName = 'mongo-' + uuid();
   const docker = new Docker();
 
   return createDockerContainerForTest(mongoName, docker).fork(
@@ -12,6 +13,7 @@ async function globalSetup() {
     },
     (IPAddress) => {
       process.IPAddress = IPAddress;
+      process.mongoName = mongoName;
     },
   );
 }
