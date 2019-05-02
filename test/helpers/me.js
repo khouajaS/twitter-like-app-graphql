@@ -24,6 +24,13 @@ const ME = gql`
           id
         }
       }
+      tweets {
+        id
+        content
+        tags {
+          id
+        }
+      }
       avatar {
         big {
           url
