@@ -61,7 +61,7 @@ const relationship = {
   ],
   resolvers: merge(
     blockMutation.resolvers,
-    unfollowMutation.resolvers,
+    unblockMutation.resolvers,
     followMutation.resolvers,
     unfollowMutation.resolvers,
   ),
