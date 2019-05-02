@@ -8,7 +8,7 @@ const buildFailedMutationResponse = (error) => ({ ok: false, error });
 
 const isMongodbDuplicationError = (error) => error.name === 'MongoError' && error.code === 11000;
 
-const mongoDUplicationError = ({ errmsg }) => {
+const mongodbUplicationError = ({ errmsg }) => {
   const [, reason, field, , value] = errmsg.split(':');
   const formatedReason = reason.split('.')[1].split(' ')[0];
   const formatedField = field.split(' ')[1].split('_')[0];
@@ -26,7 +26,7 @@ const tryCatchAsyncMutation = (mutation, { anonymous } = {}) => async (root, arg
     return response;
   } catch (error) {
     if (isMongodbDuplicationError(error)) {
-      return buildFailedMutationResponse(mongoDUplicationError(error));
+      return buildFailedMutationResponse(mongodbUplicationError(error));
     } else {
       return buildFailedMutationResponse(error.toString());
     }
