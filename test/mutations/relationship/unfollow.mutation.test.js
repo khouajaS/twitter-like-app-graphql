@@ -3,7 +3,7 @@ import {
   unfollowMutation,
   followMutation,
   createMultipleUsersMutation,
-  meWithFollowing,
+  meQuery,
 } from '../../helpers';
 
 describe('Unfollow Mutations', () => {
@@ -27,8 +27,8 @@ describe('Unfollow Mutations', () => {
     expect(unfollow.error).toBeNull();
 
     const [profile, followeeProfile] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);
@@ -60,8 +60,8 @@ describe('Unfollow Mutations', () => {
     expect(unfollow.error).toBeNull();
 
     const [profile, followeeProfile] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);
@@ -91,8 +91,8 @@ describe('Unfollow Mutations', () => {
     expect(unfollow.error).toBeNull();
 
     const [profile, followeeProfile] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);
@@ -110,8 +110,8 @@ describe('Unfollow Mutations', () => {
     expect(unfollow2.error).toBeNull();
 
     const [myProfile, followeeProfile2] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee2.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee2.register.session.token),
     ]);
 
     expect(myProfile.me.followers.count).toEqual(0);
