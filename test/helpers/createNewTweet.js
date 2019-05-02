@@ -34,7 +34,7 @@ const NEW_TWEET = gql`
   }
 `;
 
-const createNewTweetMutation = async ({ accessToken, content, tags } = {}) => {
+const createNewTweetMutation = async ({ accessToken, content, tags = [] } = {}) => {
   const tweet = {
     content: content || faker.lorem.paragraph(),
     tags,
