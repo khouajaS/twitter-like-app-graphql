@@ -6,4 +6,5 @@ export { default as followMutation } from './follow';
 export { default as unfollowMutation } from './unfollow';
 export { default as blockMutation } from './block';
 export { default as unblockMutation } from './unblock';
+export { default as createNewTweetMutation } from './createNewTweet';
 export { default as meQuery } from './me';
