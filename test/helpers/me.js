@@ -52,7 +52,7 @@ const ME = gql`
   }
 `;
 
-const meWithAvatarQuery = async (accessToken) => {
+const meQuery = async (accessToken) => {
   const { query } = createApolloClient(accessToken);
   const {
     data: { me },
@@ -63,4 +63,4 @@ const meWithAvatarQuery = async (accessToken) => {
   return { me };
 };
 
-export default meWithAvatarQuery;
+export default meQuery;
