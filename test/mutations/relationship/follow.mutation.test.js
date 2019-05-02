@@ -1,5 +1,5 @@
 import triggers from '../../triggers';
-import { createMultipleUsersMutation, followMutation, meWithFollowing } from '../../helpers';
+import { createMultipleUsersMutation, followMutation, meQuery } from '../../helpers';
 
 describe('Follow Mutations', () => {
   beforeAll(triggers.beforeAll);
@@ -17,8 +17,8 @@ describe('Follow Mutations', () => {
     expect(follow.error).toBeNull();
 
     const [profile, followeeProfile] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);
@@ -47,8 +47,8 @@ describe('Follow Mutations', () => {
     expect(follow.error).toBeNull();
 
     const [profile, followeeProfile] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);
@@ -78,9 +78,9 @@ describe('Follow Mutations', () => {
     expect(follow2.error).toBeNull();
 
     const [profile, followeeProfile, followeeProfile2] = await Promise.all([
-      meWithFollowing(me.register.session.token),
-      meWithFollowing(followee.register.session.token),
-      meWithFollowing(followee2.register.session.token),
+      meQuery(me.register.session.token),
+      meQuery(followee.register.session.token),
+      meQuery(followee2.register.session.token),
     ]);
 
     expect(profile.me.followers.count).toEqual(0);

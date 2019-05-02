@@ -1,11 +1,29 @@
 import { gql } from 'apollo-server';
 import createApolloClient from '../createApolloClient';
 
-const ME_WITH_AVATAR = gql`
+const ME = gql`
   query me {
     me {
       id
       username
+      following {
+        count
+        list {
+          id
+        }
+      }
+      followers {
+        count
+        list {
+          id
+        }
+      }
+      blocked {
+        count
+        list {
+          id
+        }
+      }
       avatar {
         big {
           url
@@ -26,7 +44,7 @@ const meWithAvatarQuery = async (accessToken) => {
   const {
     data: { me },
   } = await query({
-    query: ME_WITH_AVATAR,
+    query: ME,
   });
 
   return { me };

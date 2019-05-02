@@ -1,5 +1,5 @@
 import triggers from '../../triggers';
-import { createUserMutation, updateAvatarMutation, meWithAvatarQuery } from '../../helpers';
+import { createUserMutation, updateAvatarMutation, meQuery } from '../../helpers';
 
 describe('Update avatar mutation', () => {
   beforeAll(triggers.beforeAll);
@@ -14,7 +14,7 @@ describe('Update avatar mutation', () => {
     expect(updateAvatar.ok).toBeTruthy();
     expect(updateAvatar.error).toBeNull();
 
-    const { me } = await meWithAvatarQuery(register.session.token);
+    const { me } = await meQuery(register.session.token);
 
     expect(me.id).toBeDefined();
     expect(me.username).toEqual(user.username);
@@ -36,7 +36,7 @@ describe('Update avatar mutation', () => {
     expect(updateAvatar.ok).toBeTruthy();
     expect(updateAvatar.error).toBeNull();
 
-    const { me } = await meWithAvatarQuery(register.session.token);
+    const { me } = await meQuery(register.session.token);
 
     expect(me.id).toBeDefined();
     expect(me.avatar.big.url).toEqual(avatar.big);
