@@ -18,6 +18,7 @@ const Likes = gql`
 
 const Tweet = gql`
   type Tweet {
+    id: ID!
     content: String
     isRetweet: Boolean
     owner: User
