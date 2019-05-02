@@ -30,6 +30,12 @@ const ME = gql`
         tags {
           id
         }
+        likes {
+          count
+          list {
+            id
+          }
+        }
       }
       avatar {
         big {
