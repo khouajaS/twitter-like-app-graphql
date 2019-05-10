@@ -6,6 +6,7 @@ import createApolloServer from './server';
 dotEnv.config();
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost/twitter';
+const PORT = process.env.MONGO_URI || 4000;
 
 mongoose
   .connect(MONGO_URI, {
@@ -15,7 +16,7 @@ mongoose
   .then(() => {
     Fawn.init(mongoose);
     createApolloServer()
-      .listen()
+      .listen({ port: PORT })
       .then(({ url }) => {
         console.log(`🚀  Server ready at ${url}`); // eslint-disable-line no-console
       });
