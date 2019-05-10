@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js --w src",
-    "start": "babel-node src/index.js",
+    "start": "node ./bundle.js",
+    "build": "rollup src/index.js -o bundle.js -f cjs",
     "test": "NODE_ENV=test env-cmd --no-override .env jest --runInBand",
     "format": "prettier --write \"./**/*.{js,jsx}\""
   },
@@ -29,7 +30,8 @@
     "faker": "^4.1.0",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
-    "prettier": "1.17.0"
+    "prettier": "1.17.0",
+    "rollup": "^1.11.3"
   },
   "dependencies": {
     "apollo-server": "^2.4.8",
