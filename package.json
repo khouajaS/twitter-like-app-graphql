@@ -5,7 +5,8 @@
   "license": "MIT",
   "engines": {
     "node": "8.x",
-    "npm": "3.5"
+    "npm": "3.5",
+    "yarn": "1.15.2"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js --w src",
