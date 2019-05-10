@@ -16,7 +16,7 @@ mongoose
   .then(() => {
     Fawn.init(mongoose);
     createApolloServer()
-      .listen({ port: PORT })
+      .listen({ port: Number(PORT) })
       .then(({ url }) => {
         console.log(`🚀  Server ready at ${url}`); // eslint-disable-line no-console
       });
