@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "8.x",
+    "npm": "3.5"
+  },
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js --w src",
     "start": "babel-node src/index.js",
