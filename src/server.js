@@ -6,7 +6,9 @@ import { typeDefs, resolvers, schemaDirectives } from './schema';
 
 const ACTIVE_PLAYGROUND = process.env.ACTIVE_PLAYGROUND || 1;
 
-const playgroundOptions = ACTIVE_PLAYGROUND ? { introspection: true, playground: true } : {};
+const playgroundOptions = ACTIVE_PLAYGROUND
+  ? { introspection: true, playground: true, tracing: true }
+  : {};
 
 const schema = makeExecutableSchema({
   typeDefs,
