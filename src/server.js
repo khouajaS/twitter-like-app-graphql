@@ -24,6 +24,7 @@ const createApolloServer = (Accesstoken) => {
     schema,
     context: async ({ req }) => {
       const token = get(req, ['headers', 'x-auth']);
+      console.log('token ', token);
       const user = await User.decodeUser(token);
       return {
         user,
