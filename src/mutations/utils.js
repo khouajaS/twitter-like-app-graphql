@@ -27,9 +27,8 @@ const tryCatchAsyncMutation = (mutation, { anonymous } = {}) => async (root, arg
   } catch (error) {
     if (isMongodbDuplicationError(error)) {
       return buildFailedMutationResponse(mongodbUplicationError(error));
-    } else {
-      return buildFailedMutationResponse(error.toString());
     }
+    return buildFailedMutationResponse(error.toString());
   }
 };
 
